@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Haunted Map - 666 Black Roses Street</title>
+    
+    <!-- Leaflet.js for Map -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Creepster&display=swap');
+
+        /* General Styles */
+        body {
+            margin: 0;
+            overflow: hidden;
+            font-family: 'Creepster', cursive;
+            color: red;
+            text-align: center;
+            background: url('https://i.pinimg.com/originals/b5/66/af/b566af8bab8557bafb92a77717ab70f7.gif') no-repeat center center fixed;
+            background-size: cover;
+        }
+
+        h1 {
+            font-size: 40px;
+            text-shadow: 0 0 10px red;
+            margin-top: 20px;
+        }
+
+        /* Map Container */
+        #map {
+            height: 500px;
+            width: 90%;
+            margin: auto;
+            border: 5px solid red;
+            box-shadow: 0 0 20px red;
+            position: relative;
+        }
+
+        .address {
+            margin-top: 20px;
+            font-size: 20px;
+            font-weight: bold;
+            text-shadow: 0 0 10px red;
+        }
+
+        /* Warning Popup */
+        .popup-box {
+            position: absolute;
+            top: 120px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 350px;
+            padding: 20px;
+            background-color: black;
+            border: 4px solid red;
+            box-shadow: 0 0 15px red;
+            text-align: center;
+            font-size: 24px;
+            color: red;
+            display: none;
+            z-index: 10;
+            animation: flashText 0.5s infinite alternate;
+        }
+
+        @keyframes flashText {
+            0% { text-shadow: 0 0 10px red; }
+            100% { text-shadow: 0 0 20px yellow; }
+        }
+
+        .popup-box .close-btn {
+            background: #330000;
+            color: red;
+            padding: 10px;
+            border: none;
+            font-size: 18px;
+            cursor: pointer;
+            margin-top: 10px;
+            border-radius: 5px;
+        }
+
+        .popup-box .close-btn:hover {
+            background: red;
+            color: black;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Haunted Location: 666 Black Roses Street</h1>
+
+    <!-- WARNING BOX -->
+    <div id="infoBox" class="popup-box">
+        <h2>⚠️ DANGEROUS ZONE!!! ⚠️</h2>
+        <p>DO NOT ENTER! YOU HAVE BEEN WARNED...</p>
+        <button class="close-btn" onclick="closePopup()">Close</button>
+    </div>
+
+    <!-- Map Container -->
+    <div id="map"></div>
+    
+    <div class="address">Address: 666 Black Roses Street</div>
+
+    <audio id="scarySound" src="https://www.fesliyanstudios.com/play-mp3/4385"></audio>
+
+    <script>
+        // Initialize Leaflet Map
+        var map = L.map('map').setView([38.6200, -90.2100], 15);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; OpenStreetMap contributors'
+        }).addTo(map);
+
+        // Custom red dot marker
+        var redMarker = L.icon({
+            iconUrl: 'https://upload.wikimedia.org/wikipedia/commons/0/0e/Basic_red_dot.png',
+            iconSize: [20, 20]
+        });
+
+        // Add red marker
+        var marker = L.marker([38.6200, -90.2100], {icon: redMarker}).addTo(map);
+        marker.bindPopup("DANGEROUS ZONE!!!").openPopup();
+
+        // Show warning box when clicking marker
+        marker.on('click', function () {
+            document.getElementById('infoBox').style.display = "block";
+            document.getElementById('scarySound').play();
+        });
+
+        // Close the popup
+        function closePopup() {
+            document.getElementById('infoBox').style.display = "none";
+        }
+    </script>
+</body>
+</html>
